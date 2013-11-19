@@ -43,15 +43,23 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.v("CalcFrag", "onCreate()");
 		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			// Restore last state for checked position.
+			mPullScoresList = savedInstanceState
+					.getIntegerArrayList(STATE_PULL_SCORES);
+			mTotal = savedInstanceState.getInt(STATE_CALC_TOTAL, 0);
+		}
+		Log.v("CalcFrag", "onCreate() mPullScoresList.size() = "
+				+ mPullScoresList.size());
 		redrawCalcHistory();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		Log.v("CalcFrag", "onSaveInstanceState()");
-		super.onSaveInstanceState(outState);
 		outState.putIntegerArrayList(STATE_PULL_SCORES, mPullScoresList);
 		outState.putInt(STATE_CALC_TOTAL, mTotal);
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -64,6 +72,9 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 					.getIntegerArrayList(STATE_PULL_SCORES);
 			mTotal = savedInstanceState.getInt(STATE_CALC_TOTAL, 0);
 		}
+		Log.v("CalcFrag", "onActivityCreated() mPullScoresList.size() = "
+				+ mPullScoresList.size());
+		redrawCalcHistory();
 	}
 
 	public void calcAddScore(View view) {
@@ -107,7 +118,7 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 		TableLayout history_table = (TableLayout) getActivity().findViewById(
 				R.id.history_table);
 		TableRow row;
-		if (mPullScoresList.size() % 5 == 1) {
+		if (mPullScoresList.size() % 10 == 1) {
 			row = new TableRow(getActivity());
 			history_table.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -129,13 +140,13 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 		TableLayout history_table = (TableLayout) getActivity().findViewById(
 				R.id.history_table);
 		if (null == history_table) {
-			Log.v("", "history_table is null !");
+			Log.e("CalcFrag", "redrawCalcHistory() history_table is null !");
 			return;
 		}
 		TableRow row;
 		Log.v("", "" + mPullScoresList.size());
 		for (int i = 0; i < mPullScoresList.size(); i++) {
-			if (i % 5 == 1) {
+			if (i % 10 == 0) {
 				row = new TableRow(getActivity());
 				history_table.addView(row, new TableLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
