@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -123,20 +125,32 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 		}
 
 		TableRow row;
-		if (mPullScoresList.size() % 6 == 1) {
-			row = new TableRow(getActivity());
-			history_table.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		} else {
-			row = (TableRow) history_table.getChildAt(history_table
-					.getChildCount() - 1);
-		}
+		// Converting to dip unit
+		int dip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				(float) 1, getResources().getDisplayMetrics());
+		// if (mPullScoresList.size() % 6 == 1) {
+		row = new TableRow(getActivity());
+		history_table.addView(row, new TableLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		// } else {
+		// row = (TableRow) history_table.getChildAt(history_table
+		// .getChildCount() - 1);
+		// }
 		TextView newScore = new TextView(getActivity());
-		newScore.setPadding(8, 8, 8, 8);
+		newScore.setPadding(20 * dip, 0, 0, 0);
 		newScore.setTextSize(25);
 		newScore.setText(newScore_s);
 		if (null != row)
 			row.addView(newScore);
+
+		// auto scroll to bottom
+		final ScrollView sv = (ScrollView) getActivity().findViewById(
+				R.id.ScrollView11);
+		sv.post(new Runnable() {
+			public void run() {
+				sv.fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
 
 		newScore_input.setText("");
 	}
@@ -151,22 +165,34 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 		}
 		TableRow row;
 		Log.v("CalcFrag", "redrawCalcHistory() " + mPullScoresList.size());
+		// Converting to dip unit
+		int dip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				(float) 1, getResources().getDisplayMetrics());
 		for (int i = 0; i < mPullScoresList.size(); i++) {
-			if (i % 6 == 0) {
-				row = new TableRow(getActivity());
-				history_table.addView(row, new TableLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			} else {
-				row = (TableRow) history_table.getChildAt(history_table
-						.getChildCount() - 1);
-			}
+			// if (i % 6 == 0) {
+			row = new TableRow(getActivity());
+			history_table.addView(row, new TableLayout.LayoutParams(
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			// } else {
+			// row = (TableRow) history_table.getChildAt(history_table
+			// .getChildCount() - 1);
+			// }
 			TextView newScore = new TextView(getActivity());
-			newScore.setPadding(8, 8, 8, 8);
+			newScore.setPadding(20 * dip, 0, 0, 0);
 			newScore.setTextSize(25);
 			newScore.setText(mPullScoresList.get(i).toString());
 			if (null != row)
 				row.addView(newScore);
 		}
+
+		// auto scroll to bottom
+		final ScrollView sv = (ScrollView) getActivity().findViewById(
+				R.id.ScrollView11);
+		sv.post(new Runnable() {
+			public void run() {
+				sv.fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
 	}
 
 	private int calculateAndReset() {
