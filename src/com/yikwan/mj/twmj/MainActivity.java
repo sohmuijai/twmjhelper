@@ -113,7 +113,7 @@ public class MainActivity extends FragmentActivity implements
 			if (calcFragment.isAdded()) {
 				transaction.show(calcFragment);
 			} else {
-				transaction.addToBackStack(null);
+				// transaction.addToBackStack(null);
 				transaction.replace(R.id.container, calcFragment);
 			}
 			transaction.commit();
@@ -123,7 +123,7 @@ public class MainActivity extends FragmentActivity implements
 			if (thisGameFragment.isAdded()) {
 				transaction.show(thisGameFragment);
 			} else {
-				transaction.addToBackStack(null);
+				// transaction.addToBackStack(null);
 				transaction.replace(R.id.container, thisGameFragment);
 			}
 			transaction.commit();
@@ -133,7 +133,7 @@ public class MainActivity extends FragmentActivity implements
 			if (gameHistoryFragment.isAdded()) {
 				transaction.show(gameHistoryFragment);
 			} else {
-				transaction.addToBackStack(null);
+				// transaction.addToBackStack(null);
 				transaction.replace(R.id.container, gameHistoryFragment);
 			}
 			transaction.commit();
@@ -143,7 +143,7 @@ public class MainActivity extends FragmentActivity implements
 			if (lookupFragment.isAdded()) {
 				transaction.show(lookupFragment);
 			} else {
-				transaction.addToBackStack(null);
+				// transaction.addToBackStack(null);
 				transaction.replace(R.id.container, lookupFragment);
 			}
 			transaction.commit();
