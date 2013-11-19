@@ -117,8 +117,13 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 		// update table of laai-jong history
 		TableLayout history_table = (TableLayout) getActivity().findViewById(
 				R.id.history_table);
+		if (mPullScoresList.size() == 1) {
+			Log.v("CalcFrag", "addScore() clear table");
+			history_table.removeAllViews();
+		}
+
 		TableRow row;
-		if (mPullScoresList.size() % 10 == 1) {
+		if (mPullScoresList.size() % 6 == 1) {
 			row = new TableRow(getActivity());
 			history_table.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -127,7 +132,8 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 					.getChildCount() - 1);
 		}
 		TextView newScore = new TextView(getActivity());
-		newScore.setPadding(5, 5, 5, 5);
+		newScore.setPadding(8, 8, 8, 8);
+		newScore.setTextSize(25);
 		newScore.setText(newScore_s);
 		if (null != row)
 			row.addView(newScore);
@@ -144,9 +150,9 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 			return;
 		}
 		TableRow row;
-		Log.v("", "" + mPullScoresList.size());
+		Log.v("CalcFrag", "redrawCalcHistory() " + mPullScoresList.size());
 		for (int i = 0; i < mPullScoresList.size(); i++) {
-			if (i % 10 == 0) {
+			if (i % 6 == 0) {
 				row = new TableRow(getActivity());
 				history_table.addView(row, new TableLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -155,7 +161,8 @@ public class CalculatorFragment extends Fragment implements OnClickListener {
 						.getChildCount() - 1);
 			}
 			TextView newScore = new TextView(getActivity());
-			newScore.setPadding(5, 5, 5, 5);
+			newScore.setPadding(8, 8, 8, 8);
+			newScore.setTextSize(25);
 			newScore.setText(mPullScoresList.get(i).toString());
 			if (null != row)
 				row.addView(newScore);
